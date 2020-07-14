@@ -1,0 +1,1064 @@
+Index: src/test/java/Tests/practice/WebTable2Practice.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/test/java/Tests/practice/WebTable2Practice.java	(date 1574742983405)
++++ src/test/java/Tests/practice/WebTable2Practice.java	(date 1574742983405)
+@@ -0,0 +1,98 @@
++package Tests.practice;
++
++import org.openqa.selenium.By;
++import org.openqa.selenium.WebDriver;
++import org.openqa.selenium.WebElement;
++import org.openqa.selenium.support.ui.ExpectedConditions;
++import org.openqa.selenium.support.ui.WebDriverWait;
++import org.testng.Assert;
++import org.testng.annotations.AfterMethod;
++import org.testng.annotations.BeforeMethod;
++import org.testng.annotations.Test;
++import utils.BrowserFactory;
++
++import java.util.List;
++
++public class WebTable2Practice {
++    private WebDriver driver;
++    private WebDriverWait wait;
++    @BeforeMethod
++    public void setup(){
++        driver= BrowserFactory.getDriver("chrome");
++        driver.get("http://practice.cybertekschool.com/tables");
++        wait=new WebDriverWait(driver,15);
++        wait.until(ExpectedConditions.presenceOfElementLocated(By.id("table2")));
++    }
++    @Test(description = "print table1 data")
++    public void test1(){//without header
++        WebElement table1=driver.findElement(By.xpath("//table[@id='table2']//tbody"));
++        System.out.println(table1.getText());
++    }
++    @Test(description = "verify that number of colouns in the first table is equals to 6")
++    public void test2(){
++     int actualColumnNumbers=driver.findElements(By.xpath("//table[@id='table2']//tr[1]//td")).size();
++     int expectedColumnNumber=6;
++        System.out.println(actualColumnNumbers);
++        Assert.assertEquals(actualColumnNumbers,expectedColumnNumber);
++    }
++    @Test(description = "verify that number of rows is equals to 5")
++    public void test3(){
++     int actualRowNumbers=driver.findElements(By.xpath("//table[@id='table2']//tr")).size();
++     int expectedRowNumber=5;
++        System.out.println(actualRowNumbers);
++        Assert.assertEquals(actualRowNumbers,expectedRowNumber);
++    }
++    @Test(description = "print all values from the 2.row (excluding table heder)")
++    public void test4(){
++       List<WebElement> cell=driver.findElements(By.xpath("//table[@id='table2']//tbody//tr[2]//td"));
++       for(WebElement row2:cell){
++           System.out.println(row2.getText());
++       }
++    }
++    @Test(description = "print all values from the n-th row (excluding table heder)")
++    public void test5(){
++        int index=4;
++        List<WebElement>cell=driver.findElements(By.xpath("//table[@id='table2']//tbody//tr["+index+"]//td"));
++        for(WebElement rowData:cell){
++            System.out.println(rowData.getText());
++        }
++
++    }
++    @Test(description = "verify that e mail in the 3. row is equal to jdoe@hotmail.com")
++    public void test6(){
++        int row1=3;
++        int column=3;
++        List<WebElement> rows=driver.findElements(By.xpath("//table[@id='table2']//tbody//tr["+row1+"]//td["+column+"]"));
++        for(WebElement row:rows){
++            Assert.assertTrue(row.getText().equals("jdoe@hotmail.com"));
++            System.out.println(row.getText());
++        }
++
++    }
++    @Test(description = "verify that every email contains '@'")
++    public void test7(){
++      List<WebElement> emails=driver.findElements(By.xpath("//table[@id='table2']//tbody//tr//td[3]"));
++      for(WebElement email:emails){
++          Assert.assertTrue(email.getText().contains("@"));
++          System.out.println(email.getText());
++      }
++    }
++    @Test(description = "verify that author clicking on Last Name, values will be sorted in alphabetic order")
++    public void test(){
++    driver.findElement(By.xpath("//table[@id='table2']//*[text()='Last Name']")).click();
++    List<WebElement> lastNames=driver.findElements(By.xpath("//table[@id='table2']//tbody//td[1]"));
++    for(int i=0;i<lastNames.size()-1;i++){
++        String lastName=lastNames.get(i).getText();
++        String followinglastname=lastNames.get(i+1).getText();
++        Assert.assertTrue(lastName.compareTo(followinglastname)<0);
++        System.out.println("iteration: "+i);
++        System.out.println("current last name is "+lastName);
++        System.out.println("following last name is "+followinglastname);
++    }
++    }
++
++    @AfterMethod
++    public void teardown(){
++        driver.quit();
++    }
++}
+Index: src/test/java/Tests/practice/WebTable1Prcatice.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/test/java/Tests/practice/WebTable1Prcatice.java	(date 1574739762334)
++++ src/test/java/Tests/practice/WebTable1Prcatice.java	(date 1574739762334)
+@@ -0,0 +1,106 @@
++package Tests.practice;
++
++import org.openqa.selenium.By;
++import org.openqa.selenium.WebDriver;
++import org.openqa.selenium.WebElement;
++import org.openqa.selenium.support.ui.ExpectedConditions;
++import org.openqa.selenium.support.ui.WebDriverWait;
++import org.testng.Assert;
++import org.testng.annotations.AfterMethod;
++import org.testng.annotations.BeforeMethod;
++import org.testng.annotations.Test;
++import utils.BrowserFactory;
++
++import java.util.List;
++
++public class WebTable1Prcatice {
++    private WebDriver driver;
++    private WebDriverWait wait;
++
++    @BeforeMethod
++    public void setup() {
++        driver = BrowserFactory.getDriver("chrome");
++        driver.get("http://practice.cybertekschool.com/tables");
++        wait = new WebDriverWait(driver, 15);
++        //wait until the table1 is presence
++        wait.until(ExpectedConditions.presenceOfElementLocated(By.id("table1")));
++    }
++
++    @Test(description = "print table1 data")
++    public void test1() {
++        //without header
++        WebElement rows = driver.findElement(By.xpath("//table[@id='table1']//tbody"));
++        //with header
++        //By.id("table1")
++        System.out.println(rows.getText());
++    }
++
++    @Test(description = "verify that number of colouns in the first table is equals to 6")
++    public void test2() {
++        int expectedNumbercoluns = 6;
++        int actualNumberColuns = driver.findElements(By.xpath("//table[@id='table1']//tr/th")).size();
++        System.out.println(actualNumberColuns);
++        Assert.assertEquals(actualNumberColuns, expectedNumbercoluns);
++    }
++
++    @Test(description = "verify that number of raws is equals to 5")
++    public void test3() {
++        int actualRows = driver.findElements(By.xpath("//table[@id='table1']//tr")).size();
++        System.out.println(actualRows);
++        int expectedRows = 5;
++        Assert.assertEquals(actualRows, expectedRows);
++    }
++
++    @Test(description = "print all values from the 2.row (excluding table heder)")
++    public void test4() {
++    List<WebElement> row2=driver.findElements(By.xpath("//table[@id='table1']//tbody//tr[2]//td"));
++    for(WebElement each:row2){
++        System.out.println(each.getText());
++    }
++    }
++    @Test(description = "print all values from the n-th row (excluding table header")
++    public void test5(){
++        int index=1;
++        List<WebElement> row2=driver.findElements(By.xpath("//table[@id='table1']//tbody//tr["+index+"]//td"));
++        for(WebElement each:row2){
++            System.out.println(each.getText());
++        }
++
++    }
++    @Test(description = "verify that e mail in the 3. row is equal to jdoe@hotmail.com")
++    public void test6(){
++        int row=3;
++        int column=3;
++        String actualEmail=driver.findElement(By.xpath("//table[@id='table1']//tbody//tr["+row+"]//td["+column+"]")).getText();
++        String expectedEmail="jdoe@hotmail.com";
++        System.out.println(actualEmail);
++        Assert.assertEquals(actualEmail,expectedEmail);
++    }
++    @Test(description = "verify that every email contains '@'")
++    public void test7(){
++        int index=1;
++        List<WebElement>cells=driver.findElements(By.xpath("//table[@id='table1']//tbody//td[3]"));
++        for(WebElement each:cells) {
++            Assert.assertTrue(each.getText().contains("@"),"email not contains @");
++            System.out.println(each.getText());
++        }
++    }
++    @Test(description = "verify that author clicking on Last Name, values will be sorted in alphabetic order")
++    public void test8(){
++     driver.findElement(By.xpath("//table[@id='table1']//*[text()='Last Name']")).click();
++     List<WebElement> lastnames=driver.findElements(By.xpath("//table[@id='table1']//td[1]"));
++     for(int i=0;i<lastnames.size()-1;i++){
++         String lastname=lastnames.get(i).getText();
++         String followinglastname=lastnames.get(i+1).getText();
++         Assert.assertTrue(lastname.compareTo(followinglastname)<0);
++         System.out.println("iteration "+i);
++         System.out.println("current last name "+lastname);
++         System.out.println("following last name "+followinglastname);
++     }
++    }
++
++    @AfterMethod
++    public void teardown() {
++        driver.quit();
++    }
++}
+Index: src/test/java/Tests/practice/day7_review_VyTrack.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/test/java/Tests/practice/day7_review_VyTrack.java	(date 1573618084157)
++++ src/test/java/Tests/practice/day7_review_VyTrack.java	(date 1573618084157)
+@@ -0,0 +1,47 @@
++package Tests.practice;
++
++
++import org.apache.commons.lang3.builder.ToStringExclude;
++import org.openqa.selenium.By;
++import org.openqa.selenium.WebDriver;
++import org.openqa.selenium.WebElement;
++import org.testng.annotations.BeforeMethod;
++import org.testng.annotations.Test;
++import utils.BrowserFactory;
++
++import java.util.List;
++
++public class day7_review_VyTrack {
++    private WebDriver driver;
++    @BeforeMethod
++    public void setDriver(){
++        driver=BrowserFactory.getDriver("chrome");
++        driver.get("https://qa2.vytrack.com");
++        driver.findElement(By.xpath("//input[@type='text']")).sendKeys("user153");
++        driver.findElement(By.cssSelector("#prependedInput2")).sendKeys("UserUser123");
++        driver.findElement(By.cssSelector(".btn.btn-uppercase.btn-primary.pull-right")).click();
++
++    }
++    @Test
++    public void links(){
++        List<WebElement> list= driver.findElements(By.xpath("//a"));
++        System.out.println("Number of links: "+list.size());
++        driver.quit();
++    }
++    @Test
++    public void printLinks(){
++        List<WebElement> list= driver.findElements(By.xpath("//a"));
++        for(WebElement WebElement:list){
++            if(WebElement.getText().isEmpty()){
++                continue;
++            }
++            System.out.println(WebElement.getText()+" ");
++
++        }
++        driver.quit();
++    }
++
++
++
++
++}
+Index: src/test/java/Tests/practice/day7_review_Britix.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/test/java/Tests/practice/day7_review_Britix.java	(date 1573620152111)
++++ src/test/java/Tests/practice/day7_review_Britix.java	(date 1573620152111)
+@@ -0,0 +1,31 @@
++package Tests.practice;
++
++import org.openqa.selenium.By;
++import org.openqa.selenium.WebDriver;
++import org.testng.Assert;
++import org.testng.annotations.BeforeMethod;
++import org.testng.annotations.Test;
++import utils.BrowserFactory;
++
++public class day7_review_Britix {
++    private WebDriver driver;
++    @BeforeMethod
++    public void logIn(){
++        driver= BrowserFactory.getDriver("chrome");
++        driver.get("https://login1.nextbasecrm.com/company/personal/user/527/disk/path/");
++        driver.findElement(By.cssSelector(".login-inp")).sendKeys("helpdesk37@cybertekschool.com");
++        driver.findElement(By.cssSelector("[type*='password']")).sendKeys("UserUser");
++        driver.findElement(By.cssSelector("[value^='L']")).click();
++
++    }
++    @Test
++    public void ActivityStream(){
++
++        String expectedTitle="Activity Stream";
++        driver.findElement(By.xpath("//span[@data-role='item-text']")).getText();
++        driver.findElement(By.id("pagetitle"));
++        String actualTitle=driver.getTitle();
++        Assert.assertEquals(actualTitle,expectedTitle,"Contact Center");
++        driver.quit();
++    }
++}
+Index: src/test/java/Tests/practice/FileUploading.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/test/java/Tests/practice/FileUploading.java	(date 1578931930054)
++++ src/test/java/Tests/practice/FileUploading.java	(date 1578931930054)
+@@ -0,0 +1,32 @@
++package Tests.practice;
++
++import org.openqa.selenium.By;
++import org.openqa.selenium.WebDriver;
++import org.openqa.selenium.WebElement;
++import org.testng.Assert;
++import org.testng.annotations.Test;
++import utils.BrowserFactory;
++import utils.BrowserUtils;
++
++public class FileUploading {
++
++    @Test(description = "file uploading")
++    public void test1(){
++        WebDriver driver= BrowserFactory.getDriver("chrome");
++        driver.get("http://practice.cybertekschool.com/");
++        driver.findElement(By.partialLinkText("Upload")).click();
++        driver.findElement(By.cssSelector("#file-upload")).sendKeys("/Users/Filiz/Desktop/FlipgridQuestions.txt");
++
++        BrowserUtils.wait(1);
++
++        driver.findElement(By.cssSelector(".button")).click();
++        String actualName=driver.findElement(By.cssSelector("#uploaded-files")).getText();
++        String expected="FlipgridQuestions.txt";
++        Assert.assertEquals(actualName,expected);
++
++
++
++    driver.quit();
++    }
++
++}
+Index: src/test/java/Tests/practice/WindowSwitching.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/test/java/Tests/practice/WindowSwitching.java	(date 1574384229417)
++++ src/test/java/Tests/practice/WindowSwitching.java	(date 1574384229417)
+@@ -0,0 +1,62 @@
++package Tests.practice;
++
++import org.openqa.selenium.By;
++import org.openqa.selenium.WebDriver;
++import org.testng.Assert;
++import org.testng.annotations.AfterMethod;
++import org.testng.annotations.BeforeMethod;
++import org.testng.annotations.Test;
++import utils.BrowserFactory;
++import utils.BrowserUtils;
++
++import java.util.Set;
++
++public class WindowSwitching {
++    private WebDriver driver;
++    @BeforeMethod
++    public void setup(){
++        driver= BrowserFactory.getDriver("chrome");
++        driver.get("http://practice.cybertekschool.com/");
++    }
++    @Test(description = "Verify that title is practice")
++    public void test1(){
++     driver.findElement(By.linkText("New tab")).click();
++        BrowserUtils.wait(4);
++        System.out.println(driver.getTitle());
++        Assert.assertEquals(driver.getTitle(),"Practice");
++    }
++    @Test(description = "verify that user is able to see new window, switch between the windows")
++    public void test2(){
++        driver.findElement(By.linkText("New tab")).click();
++        BrowserUtils.wait(4);
++        String OriginalWindowHandle=driver.getWindowHandle();
++        Set<String> windowHandles=driver.getWindowHandles();
++        for(String windowHandle: windowHandles){
++            if(!windowHandle.equals(OriginalWindowHandle)){
++                driver.switchTo().window(windowHandle);
++            }
++        }
++        System.out.println(driver.getTitle());
++        Assert.assertEquals(driver.getTitle(),"Fresh tab");
++
++        //going back original page, by title
++        String originalTitle="Practice";
++        for(String windowHandle:windowHandles){
++            driver.switchTo().window(windowHandle);
++            if(driver.getTitle().equals(originalTitle)){
++                break;
++            }
++        }
++        System.out.println(driver.getTitle());
++    }
++
++
++
++
++
++
++    @AfterMethod
++    public void teardown(){
++        driver.quit();
++    }
++}
+Index: src/test/java/Tests/practice/xpathRelative.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/test/java/Tests/practice/xpathRelative.java	(date 1582348921486)
++++ src/test/java/Tests/practice/xpathRelative.java	(date 1582348921486)
+@@ -0,0 +1,29 @@
++package Tests.practice;
++
++import org.openqa.selenium.Alert;
++import org.openqa.selenium.By;
++import org.openqa.selenium.WebDriver;
++import org.openqa.selenium.WebElement;
++import org.testng.Assert;
++import utils.BrowserFactory;
++import utils.Driver;
++
++public class xpathRelative {
++    public static void main(String[] args) {
++        WebDriver driver= BrowserFactory.getDriver("chrome");
++        driver.get("https://login1.nextbasecrm.com/company/personal/user/527/disk/path/");
++        driver.findElement(By.xpath("//input[@class='login-inp']")).sendKeys("filiz");
++        driver.findElement(By.xpath("//input[@type='password']")).sendKeys("123");
++        driver.findElement(By.xpath("//input[@type='submit']")).click();
++        WebElement warninMessage=driver.findElement(By.xpath("//div[@class='errortext']"));
++        System.out.println(warninMessage.getText());
++
++        String s =Float.toString(3.4f);
++        String s1=Integer.toString(7);
++
++        int a=Integer.parseInt("123");
++
++
++
++    }
++}
+Index: src/test/java/Tests/practice/XpathAbsolute.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/test/java/Tests/practice/XpathAbsolute.java	(date 1575349126150)
++++ src/test/java/Tests/practice/XpathAbsolute.java	(date 1575349126150)
+@@ -0,0 +1,26 @@
++package Tests.practice;
++
++import org.openqa.selenium.By;
++import org.openqa.selenium.WebDriver;
++import org.openqa.selenium.WebElement;
++import utils.BrowserFactory;
++
++public class XpathAbsolute {
++    public static void main(String[] args) {
++        WebDriver driver= BrowserFactory.getDriver("chrome");
++        driver.get("http://practice.cybertekschool.com/registration_form");
++        driver.findElement(By.xpath("/html/body/div/div/div/div/div//form/div/div/input")).sendKeys("Filiz");
++        driver.findElement(By.xpath("/html/body/div/div/div/div/div//form/div[3]/div/input")).sendKeys("Anne");
++        driver.findElement(By.xpath("/html/body/div/div/div/div/div//form/div[6]/div/input")).sendKeys("1234567");
++
++        //britix
++        driver.get("https://login1.nextbasecrm.com/company/personal/user/527/disk/path/");
++        WebElement warningMessage=driver.findElement(By.id("/html/body/table/tbody/tr[2]/td/div/div/div[2]"));
++        System.out.println(warningMessage.getText());
++
++        //vytrack
++        driver.get("https://qa2.vytrack.com/user/login");
++
++
++    }
++}
+Index: src/test/java/Tests/practice/StartsWith.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/test/java/Tests/practice/StartsWith.java	(date 1575349126154)
++++ src/test/java/Tests/practice/StartsWith.java	(date 1575349126154)
+@@ -0,0 +1,20 @@
++package Tests.practice;
++
++import org.openqa.selenium.By;
++import org.openqa.selenium.WebDriver;
++import org.openqa.selenium.WebElement;
++import utils.BrowserFactory;
++
++public class StartsWith {
++    public static void main(String[] args) {
++        WebDriver driver= BrowserFactory.getDriver("chrome");
++        driver.get("https://login1.nextbasecrm.com/company/personal/user/527/disk/path/");
++        driver.findElement(By.xpath("//input[starts-with(@placeholder,'Lo')]")).sendKeys("Filiz");
++        driver.findElement(By.xpath("//input[starts-with(@type,'pas')]")).sendKeys("123");
++        driver.findElement(By.xpath("//input[starts-with(@onclick,'BX')]")).click();
++        WebElement wMessage=driver.findElement(By.xpath("//div[starts-with(@class,'er')]"));
++        System.out.println(wMessage.getText());
++        driver.quit();
++
++    }
++}
+Index: src/test/java/Tests/practice/WaitsPractice.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/test/java/Tests/practice/WaitsPractice.java	(date 1574401879135)
++++ src/test/java/Tests/practice/WaitsPractice.java	(date 1574401879135)
+@@ -0,0 +1,72 @@
++package Tests.practice;
++
++import org.openqa.selenium.By;
++import org.openqa.selenium.WebDriver;
++import org.openqa.selenium.WebElement;
++import org.openqa.selenium.support.ui.ExpectedCondition;
++import org.openqa.selenium.support.ui.ExpectedConditions;
++import org.openqa.selenium.support.ui.WebDriverWait;
++import org.testng.Assert;
++import org.testng.annotations.AfterMethod;
++import org.testng.annotations.BeforeMethod;
++import org.testng.annotations.Test;
++import utils.BrowserFactory;
++
++import java.util.concurrent.TimeUnit;
++
++public class WaitsPractice {
++    private WebDriver driver;
++    @BeforeMethod
++    public void setup(){
++        driver= BrowserFactory.getDriver("chrome");
++        driver.get("http://practice.cybertekschool.com/");
++    }
++    @Test
++    public void test1(){
++//        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
++        driver.findElement(By.linkText("Dynamic Loading")).click();
++        driver.findElement(By.partialLinkText("Example 1")).click();
++        driver.findElement(By.tagName("Button")).click();
++
++        WebElement usernamebox=driver.findElement(By.id("username"));
++        WebDriverWait wait=new WebDriverWait(driver,10);
++        wait.until(ExpectedConditions.visibilityOf(usernamebox));
++        usernamebox.sendKeys("tomsmith");
++
++        //password
++        WebElement passwordBox=driver.findElement(By.id("pwd"));
++//        wait.until(ExpectedConditions.invisibilityOf(passwordBox));
++        passwordBox.sendKeys("SuperSecretPassword");
++
++       //submit button
++        WebElement submitButton=driver.findElement(By.xpath("//button[text()='Submit']"));
++        wait.until(ExpectedConditions.elementToBeClickable(submitButton));
++        submitButton.click();
++
++        //message
++        WebElement message=driver.findElement(By.cssSelector("#flash"));
++        wait.until(ExpectedConditions.visibilityOf(message));
++        System.out.println(message.getText());
++    }
++    @Test(description = "overlay")
++    public void test2(){
++        driver.findElement(By.linkText("Dynamic Loading")).click();
++        driver.findElement(By.partialLinkText("Example 5")).click();
++        WebDriverWait wait=new WebDriverWait(driver,15);
++        WebElement overlay=driver.findElement(By.cssSelector("[class='fa fa-cog fa-spin']"));
++        wait.until(ExpectedConditions.visibilityOf(overlay));
++        driver.findElement(By.id("username")).sendKeys("tomsmith");
++        //enter password
++        driver.findElement(By.id("pwd")).sendKeys("SuperSecretPassword");
++        //click on submit key
++        driver.findElement(By.tagName("button")).click();
++
++    }
++
++
++
++    @AfterMethod
++    public void teardown(){
++        driver.quit();
++    }
++}
+Index: src/test/java/Tests/practice/MultipleButtons.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/test/java/Tests/practice/MultipleButtons.java	(date 1574295817354)
++++ src/test/java/Tests/practice/MultipleButtons.java	(date 1574295817354)
+@@ -0,0 +1,99 @@
++package Tests.practice;
++
++import org.openqa.selenium.By;
++import org.openqa.selenium.WebDriver;
++import org.openqa.selenium.WebElement;
++import org.openqa.selenium.support.ui.Select;
++import org.testng.Assert;
++import org.testng.annotations.AfterMethod;
++import org.testng.annotations.BeforeMethod;
++import org.testng.annotations.Test;
++import utils.BrowserFactory;
++import utils.BrowserUtils;
++
++import java.util.List;
++
++public class MultipleButtons {
++    private WebDriver driver;
++
++    @BeforeMethod
++    public void setup() {
++        driver = BrowserFactory.getDriver("chrome");
++        driver.get("http://practice.cybertekschool.com/");
++    }
++
++    @Test(description = "click all the cehck boxes, isEnable,isSelected")
++    public void test1() {
++
++        driver.findElement(By.linkText("Checkboxes")).click();
++        List<WebElement> checkbox = driver.findElements(By.cssSelector("[type='checkbox']"));
++
++        int counter = 1;
++        for (WebElement box : checkbox) {
++
++            if (box.isEnabled() && !box.isSelected()) {
++                BrowserUtils.wait(1);
++                box.click();
++                System.out.println(counter + " is clicked");
++            } else {
++                System.out.println(counter + " is not clicked ");
++            }
++            counter++;
++        }
++
++
++    }
++
++    @Test(description = "select Option 2")
++    public void test2() {
++        driver.findElement(By.linkText("Dropdown")).click();
++        WebElement dropDown = driver.findElement(By.cssSelector("#dropdown"));
++        Select select = new Select(dropDown);
++        select.selectByValue("2");
++        BrowserUtils.wait(1);
++        Assert.assertEquals(select.getFirstSelectedOption().getText(), "Option 2");
++
++    }
++
++    @Test(description = "click all Radio buttons")
++    public void test3() {
++        driver.findElement(By.linkText("Radio Buttons")).click();
++        List<WebElement> buttons = driver.findElements(By.xpath("//input[@type='radio']"));
++        int count = 1;
++        for (WebElement button : buttons) {
++            if (button.isEnabled() && !button.isSelected()) {
++                button.click();
++                System.out.println(button.getAttribute("id") + " clickable");
++            } else {
++                System.out.println(button.getAttribute("id") + " not clickable");
++            }
++            count++;
++        }
++
++    }
++
++    @Test(description = "verify that blue button is selected already")
++    public void test4() {
++        driver.findElement(By.linkText("Radio Buttons")).click();
++        WebElement blueButton = driver.findElement(By.cssSelector("#blue"));
++        BrowserUtils.wait(1);
++        Assert.assertTrue(blueButton.isSelected());
++    }
++    @Test(description = "verify that red button is not selected")
++     public void test5(){
++        driver.findElement(By.linkText("Radio Buttons")).click();
++        WebElement redButton=driver.findElement(By.id("red"));
++        Assert.assertFalse(redButton.isSelected());
++    }
++    @Test(description = "verify that green button is not clickable")
++    public void test6(){
++        driver.findElement(By.linkText("Radio Buttons")).click();
++        WebElement greenButton=driver.findElement(By.id("green"));
++        Assert.assertFalse(greenButton.isEnabled());
++    }
++    @AfterMethod
++    public void teardown() {
++        driver.quit();
++
++    }
++}
+Index: src/test/java/Tests/practice/CheckBoxes.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/test/java/Tests/practice/CheckBoxes.java	(date 1575256319292)
++++ src/test/java/Tests/practice/CheckBoxes.java	(date 1575256319292)
+@@ -0,0 +1,41 @@
++package Tests.practice;
++
++import org.openqa.selenium.By;
++import org.openqa.selenium.WebDriver;
++import org.openqa.selenium.WebElement;
++import org.testng.Assert;
++import org.testng.annotations.AfterMethod;
++import org.testng.annotations.BeforeMethod;
++import org.testng.annotations.Test;
++import utils.BrowserFactory;
++
++public class CheckBoxes {
++    private WebDriver driver;
++
++    @BeforeMethod
++    public void setup(){
++        driver= BrowserFactory.getDriver("chrome");
++        driver.get("http://practice.cybertekschool.com/");
++        driver.findElement(By.linkText("Checkboxes")).click();
++
++    }
++    @Test(description = "checkbox is selected or not")
++    public void test1(){
++        WebElement chechBox1=driver.findElement(By.xpath("//input[@type='checkbox'][1]"));
++
++        Assert.assertFalse(chechBox1.isSelected());
++    }
++    @Test(description = "checkbox is selected or not")
++    public void test2(){
++        WebElement chechBox1=driver.findElement(By.id("//input[@type='checkbox'][2]"));
++        Assert.assertTrue(chechBox1.isSelected());
++    }
++
++
++
++    @AfterMethod
++    public void teardown(){
++        driver.quit();
++    }
++
++}
+Index: src/test/java/Tests/practice/Dropdowns.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/test/java/Tests/practice/Dropdowns.java	(date 1579394227140)
++++ src/test/java/Tests/practice/Dropdowns.java	(date 1579394227140)
+@@ -0,0 +1,62 @@
++package Tests.practice;
++
++import org.openqa.selenium.By;
++import org.openqa.selenium.WebDriver;
++import org.openqa.selenium.WebElement;
++import org.openqa.selenium.support.ui.Select;
++import org.testng.Assert;
++import org.testng.annotations.AfterMethod;
++import org.testng.annotations.BeforeMethod;
++import org.testng.annotations.Test;
++import utils.BrowserFactory;
++import utils.BrowserUtils;
++
++import java.util.List;
++
++public class Dropdowns {
++    private WebDriver driver;
++    @BeforeMethod
++    public void setup(){
++        driver= BrowserFactory.getDriver("chrome");
++        driver.get("http://practice.cybertekschool.com/");
++        driver.findElement(By.linkText("Dropdown")).click();
++    }
++    @Test(description = "select April from the months dropdown")
++    public void test1(){
++        WebElement months=driver.findElement(By.xpath("//select[@id='month']"));
++        Select select=new Select(months);
++        select.selectByVisibleText("April");
++        BrowserUtils.wait(1);
++        Assert.assertEquals(select.getFirstSelectedOption().getText(),"April");
++    }
++    @Test(description = "select the day from the day dropdown")
++    public void test2(){
++        WebElement day=driver.findElement(By.xpath("//select[@id='day']"));
++        Select select=new Select(day);
++        select.selectByValue("9");
++        BrowserUtils.wait(1);
++        Assert.assertEquals(select.getFirstSelectedOption().getText(),"8");
++
++    }
++    @Test(description = "select the year from the year dropdown")
++    public void test3(){
++        WebElement year=driver.findElement(By.xpath("//select[@id='year']"));
++        Select select=new Select(year);
++        select.selectByValue("1978");
++        BrowserUtils.wait(1);
++        Assert.assertEquals(select.getFirstSelectedOption().getText(),"1978");
++    }
++    @Test(description = "display the months")
++    public void test(){
++        WebElement element=driver.findElement(By.xpath("//select[@id='month']"));
++        Select select=new Select(element);
++        List<WebElement> states=select.getOptions();
++        for(WebElement state:states){
++            System.out.println(state.getText());
++        }
++    }
++    @AfterMethod
++    public void teardown(){
++        driver.quit();
++    }
++}
+Index: src/test/java/Tests/practice/DragandDrop.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/test/java/Tests/practice/DragandDrop.java	(date 1574489310488)
++++ src/test/java/Tests/practice/DragandDrop.java	(date 1574489310488)
+@@ -0,0 +1,33 @@
++package Tests.practice;
++
++import org.openqa.selenium.By;
++import org.openqa.selenium.WebDriver;
++import org.openqa.selenium.WebElement;
++import org.openqa.selenium.interactions.Actions;
++import org.testng.annotations.Test;
++import utils.BrowserFactory;
++import utils.BrowserUtils;
++
++public class DragandDrop {
++    @Test
++    public void test1(){
++        WebDriver driver= BrowserFactory.getDriver("chrome");
++        driver.get("https://demos.telerik.com/kendo-ui/dragdrop/index");
++        driver.manage().window().maximize();
++
++        driver.findElement(By.cssSelector("button[class='optanon-allow-all accept-cookies-button']")).click();
++
++        Actions action=new Actions(driver);
++        WebElement earth=driver.findElement(By.id("droptarget"));
++        WebElement moon=driver.findElement(By.id("draggable"));
++        BrowserUtils.wait(2);
++        action.dragAndDrop(moon,earth).perform();
++        BrowserUtils.wait(2);
++
++
++
++        driver.quit();
++
++
++    }
++}
+Index: src/test/java/Tests/practice/ActionsHover.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/test/java/Tests/practice/ActionsHover.java	(date 1594590157621)
++++ src/test/java/Tests/practice/ActionsHover.java	(date 1594590157621)
+@@ -0,0 +1,55 @@
++package Tests.practice;
++
++import io.github.bonigarcia.wdm.WebDriverManager;
++import org.openqa.selenium.By;
++import org.openqa.selenium.WebDriver;
++import org.openqa.selenium.WebElement;
++import org.openqa.selenium.firefox.FirefoxDriver;
++import org.openqa.selenium.interactions.Actions;
++import org.testng.Assert;
++import org.testng.annotations.AfterMethod;
++import org.testng.annotations.BeforeMethod;
++import org.testng.annotations.Test;
++import utils.BrowserFactory;
++import utils.BrowserUtils;
++import utils.Driver;
++
++public class ActionsHover {
++    WebDriverManager.chromedriver().setup();
++    WebDriver deriver=new FirefoxDriver();
++    private WebDriver driver;
++    @BeforeMethod
++    public void setup(){
++        driver= BrowserFactory.getDriver("chrome");
++        driver.get("http://practice.cybertekschool.com/hovers");
++    }
++    @Test(description = "verify first image")
++    public void test1(){
++        WebElement image1=driver.findElement(By.cssSelector(".figure:nth-of-type(1)"));
++        Assert.assertTrue(Driver.get().getPageSource().contains("Hovers"));
++
++        Actions action=new Actions(driver);
++        action.moveToElement(image1).perform();
++        String actualText=driver.findElement(By.xpath("//h5[text()='name: user1']")).getText();
++        String expected="name: user1";
++        System.out.println(actualText);
++        Assert.assertEquals(actualText,expected,"message is wrong");
++driver.navigate().
++
++    }
++    @Test(description = "verify all images")
++    public void test2(){
++        Actions action=new Actions(driver);
++        for(int i=1;i<=3;i++) {
++
++//           action.moveToElement(driver.findElement(By.cssSelector(".figure:nth-of-type("+i+")"))).perform();
++           action.moveToElement(driver.findElement(By.xpath("//div[@class='figure']["+i+"]"))).perform();//both works
++        BrowserUtils.wait(2);
++//            System.out.println(driver.findElement(By.cssSelector(".figure:nth-of-type("+i+")")).getText());
++        }
++    }
++    @AfterMethod
++    public void teardown(){
++        driver.quit();
++    }
++}
+Index: src/test/java/Tests/practice/VasylCodes.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/test/java/Tests/practice/VasylCodes.java	(date 1574563294870)
++++ src/test/java/Tests/practice/VasylCodes.java	(date 1574563294870)
+@@ -0,0 +1,58 @@
++package Tests.practice;
++
++
++    import org.openqa.selenium.By;
++import org.openqa.selenium.Keys;
++import org.openqa.selenium.WebDriver;
++import org.openqa.selenium.WebElement;
++import org.openqa.selenium.support.ui.ExpectedConditions;
++import org.openqa.selenium.support.ui.WebDriverWait;
++import org.testng.Assert;
++import org.testng.annotations.AfterMethod;
++import org.testng.annotations.BeforeMethod;
++import org.testng.annotations.Test;
++import utils.BrowserFactory;
++import java.util.concurrent.TimeUnit;
++public class VasylCodes {
++        private WebDriver driver;
++        private WebDriverWait wait;
++        @BeforeMethod
++        public void setup(){
++            driver = BrowserFactory.getDriver("chrome");
++            //explicit wait
++            wait = new WebDriverWait(driver, 10);
++            //implicit wait
++            driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
++            //maximize browser
++            driver.manage().window().maximize();
++            driver.get("https://qa1.vytrack.com/");
++            driver.findElement(By.id("prependedInput")).sendKeys("storemanager85");
++            driver.findElement(By.id("prependedInput2")).sendKeys("UserUser123", Keys.ENTER);
++            WebElement activitiesElement = driver.findElement(By.linkText("Activities"));
++            wait.until(ExpectedConditions.visibilityOf(activitiesElement));
++            wait.until(ExpectedConditions.elementToBeClickable(activitiesElement));
++            activitiesElement.click();
++            WebElement calendarEventsElement = driver.findElement(By.linkText("Calendar Events"));
++            wait.until(ExpectedConditions.visibilityOf(calendarEventsElement));
++            wait.until(ExpectedConditions.elementToBeClickable(calendarEventsElement));
++            calendarEventsElement.click();
++            WebElement loaderMask = driver.findElement(By.cssSelector("div[class='loader-mask shown']"));
++            wait.until(ExpectedConditions.invisibilityOf(loaderMask));
++        }
++        @Test(description = "Verify page subtitle")
++        public void test1(){
++            String expectedSubtitle = "All Calendar Events";
++            String actualSubtitle = driver.findElement(By.className("oro-subtitle")).getText();
++            Assert.assertEquals(actualSubtitle, expectedSubtitle, "Subtitle is wrong!");
++        }
++        @Test(description = "Verify that 'Create Calendar event' button is displayed")
++        public void test2(){
++            Assert.assertTrue(driver.findElement(By.cssSelector("[title='Create Calendar event']")).isDisplayed());
++        }
++        @AfterMethod
++        public void teardown(){
++            driver.quit();
++        }
++    }
++
++
+Index: src/test/java/Tests/practice/PopUpPractice.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/test/java/Tests/practice/PopUpPractice.java	(date 1578793720370)
++++ src/test/java/Tests/practice/PopUpPractice.java	(date 1578793720370)
+@@ -0,0 +1,57 @@
++package Tests.practice;
++
++import org.openqa.selenium.Alert;
++import org.openqa.selenium.By;
++import org.openqa.selenium.WebDriver;
++import org.testng.annotations.AfterMethod;
++import org.testng.annotations.BeforeMethod;
++import org.testng.annotations.Test;
++import utils.BrowserFactory;
++import utils.BrowserUtils;
++
++public class PopUpPractice {
++    private WebDriver driver;
++    @BeforeMethod
++    public void setup(){
++        driver= BrowserFactory.getDriver("chrome");
++        driver.get("http://practice.cybertekschool.com/");
++        driver.findElement(By.linkText("JavaScript Alerts")).click();
++
++    }
++    @Test(description = "click on button then ok button on popup, then get the message")
++    public void test1(){
++
++
++        driver.findElement(By.xpath("//button[1]")).click();
++        Alert alert=driver.switchTo().alert();
++        System.out.println(alert.getText());
++        BrowserUtils.wait(1);
++        alert.accept();
++        System.out.println(driver.findElement(By.cssSelector("#result")).getText());
++    }
++    @Test(description = "click on button2, and cancel it, then get the message")
++    public void test2(){
++        driver.findElement(By.xpath("//button[2]")).click();
++        Alert alert=driver.switchTo().alert();
++        System.out.println(alert.getText());
++        BrowserUtils.wait(1);
++        alert.dismiss();
++        BrowserUtils.wait(1);
++        System.out.println(driver.findElement(By.id("result")).getText());
++    }
++    @Test(description = "enter option3, enter text, then click ok")
++    public void test3(){
++        driver.findElement(By.xpath("//button[3]")).click();
++        Alert alert=driver.switchTo().alert();
++        System.out.println(alert.getText());
++        BrowserUtils.wait(1);
++        alert.sendKeys("Java is fun");
++        BrowserUtils.wait(1);
++        alert.accept();
++        System.out.println(driver.findElement(By.cssSelector("#result")).getText());
++    }
++    @AfterMethod
++    public void teardown(){
++        driver.quit();
++    }
++}
