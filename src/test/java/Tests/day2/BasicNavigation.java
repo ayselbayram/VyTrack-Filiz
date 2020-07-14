@@ -1,7 +1,9 @@
 package Tests.day2;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import utils.BrowserFactory;
 /*
    .get("url")--> to open a website
    .close() method-->to close the browser
@@ -16,7 +18,8 @@ import org.openqa.selenium.chrome.ChromeDriver;
 public class BasicNavigation {
     public static void main(String[] args) {
         WebDriverManager.chromedriver().setup();
-        ChromeDriver driver=new ChromeDriver();
+        WebDriver driver= BrowserFactory.getDriver("chrome");
+//        driver=new ChromeDriver();
         //to maximize browser
         driver.manage().window().maximize();
         driver.get("http:/google.com");

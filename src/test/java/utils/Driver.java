@@ -16,6 +16,7 @@ public class Driver {
     }
     //if switch statement complaints on string parameter
     //change java version for 7+ atleast
+
     public static WebDriver get(){
         //if webdriver object was not created yet
         if(driver==null){

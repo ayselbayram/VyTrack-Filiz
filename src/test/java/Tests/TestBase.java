@@ -5,6 +5,7 @@ package Tests;
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
+import com.aventstack.extentreports.reporter.ExtentLoggerReporter;
 import org.testng.ITestResult;
 import org.testng.annotations.*;
 import utils.BrowserUtils;
@@ -24,6 +25,7 @@ public abstract class TestBase {
 
     //initialize report as it is in this variables, before test
     protected  static ExtentReports extentReports;
+
     //will be creating report itself
     //he ExtentHtmlReporter creates a rich standalone HTML file. It allows several
     //configuration options via the <code>config()</code> method.
@@ -91,7 +93,7 @@ public abstract class TestBase {
             extentTest.fail(result.getThrowable());
             try {
                 //BrowserUtils.getScreenshot(result.getName())--takes screenshot and returns location of that screen
-                //this methods throws IOException (which is cjecked)
+                //this methods throws IOException (which is checked)
                 //any checked exception must be handled
                 extentTest.addScreenCaptureFromPath(BrowserUtils.getScreenshot(result.getName()));
             }catch(IOException e){

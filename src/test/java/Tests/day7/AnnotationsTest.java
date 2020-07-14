@@ -6,6 +6,7 @@ import org.testng.annotations.*;
 public class AnnotationsTest {
     //runs only ones before  class  and before all tests
     @BeforeClass
+
     public void beforeClass(){
         System.out.println("Before class");
     }

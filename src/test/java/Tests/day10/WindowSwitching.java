@@ -9,6 +9,7 @@ import org.testng.annotations.Test;
 import utils.BrowserFactory;
 import utils.BrowserUtils;
 
+import java.util.List;
 import java.util.Set;
 
 public class WindowSwitching {

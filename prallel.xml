@@ -1,0 +1,45 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name="deneme"  parallel="classes" thread-count="8">
+
+    <test name="paralel test">
+        <classes>
+<!--            <class name="Tests.vytrack.CalendarEventTests"></class>-->
+            <class name="Tests.vytrack.LoginTests"></class>
+            <class name="Tests.vytrack.NewCalendarEventsTest"></class>
+            <class name="Tests.vytrack.CalendarEventTests"></class>
+            
+        </classes>
+    </test>
+<!--    <test name="deneme2">-->
+<!--        <classes>-->
+<!--            <class name="Tests.vytrack.CreateCarTests">-->
+<!--                <methods>-->
+<!--                    <exclude name="test1"></exclude>-->
+<!--                </methods>-->
+<!--            </class>-->
+<!--        </classes>-->
+<!--    </test>-->
+<!--    <test name="denem3">-->
+<!--        <groups>-->
+<!--            <run>-->
+<!--                <exclude name="groups"></exclude>-->
+<!--            </run>-->
+<!--        </groups>-->
+<!--    </test>-->
+<!--    <test name="deneme4">-->
+<!--        <classes>-->
+<!--         <class name="Tests.vytrack.CampaingsTest">-->
+<!--             <methods>-->
+<!--                 <include name=".*click.*">-->
+
+<!--                 </include>-->
+<!--             </methods>-->
+<!--         </class>-->
+<!--        </classes>-->
+<!--    </test>-->
+
+
+
+</suite>
+
+

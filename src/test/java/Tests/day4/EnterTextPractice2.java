@@ -18,6 +18,9 @@ public class EnterTextPractice2 {
         WebDriver driver= BrowserFactory.getDriver("chrome");
         driver.get("http://practice.cybertekschool.com/forgot_password");
         WebElement login=driver.findElement(By.name("email"));
+        System.out.println("filiz"+login.getLocation());
+
+
         login.sendKeys("random@email.com", Keys.ENTER);
         WebElement confirmationmessage=driver.findElement(By.name("confirmation_message"));
         String expectedMessage="Your e-mail's been sent!";

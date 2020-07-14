@@ -6,18 +6,18 @@ import org.openqa.selenium.support.FindBy;
 import utils.BrowserUtils;
 import utils.Driver;
 
-public class CreatCarPage {
+public class CreateCarPage extends BasePage{
 
-    @FindBy(css = "[id^='custom_entity_type_LicensePlate']")
+    @FindBy(name="custom_entity_type[LicensePlate]")
     public WebElement licensePlateElement;
 
-    @FindBy(name="custom_entity_type[Driver]']")
+    @FindBy(name = "custom_entity_type[Driver]")
     public WebElement driverElement;
 
     @FindBy(css="[name='custom_entity_type[Location]']")
     public WebElement locationElement;
 
-   @FindBy(xpath = "//div[@class='btn-group pull-right']/button[contains(text(),'Save and Close')]")
+    @FindBy(css = "[class='btn btn-success action-button']")
     public WebElement saveAndCloseButtonElement;
 
     @FindBy(css = "div[id*='FuelType']")
@@ -26,6 +26,12 @@ public class CreatCarPage {
     //if this locator doesn't work, use [id^='uniform-custom_entity_type_Logo_file'] > span[class='action']
     @FindBy(name = "custom_entity_type[Logo][file]")
     public WebElement logoElement;
+
+    @FindBy(name="custom_entity_type[ModelYear]")
+    public WebElement modelYearElement;
+
+    @FindBy(name="custom_entity_type[Color]")
+    public WebElement colorElement;
 
     public void uploadLogo(String pathToTheFile){
        logoElement.sendKeys(pathToTheFile);

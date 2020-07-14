@@ -1,10 +1,25 @@
 package Tests.day1;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
 public class MyFirstSeleniumScript {
+
     public static void main(String[] args) {
+
+
+        String str="fsgd749&fhc";
+        String result="";
+        for(int i=0;i<str.length();i++){
+            if(!Character.isDigit(str.charAt(i)) && !Character.isAlphabetic(str.charAt(i))){
+                result+=str.charAt(i);
+
+            }
+
+        }
+        System.out.println(result);
+
         //we have to setup webdriver based on the driver that we gonna use
         WebDriverManager.chromedriver().setup();
         //we need to create an object of appropriate class
@@ -24,6 +39,9 @@ public class MyFirstSeleniumScript {
         }
         //to close browser at the end of test execution
         //if we open gate we need to close it.
+
         driver.close();
     }
+
+
 }

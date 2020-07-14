@@ -1,5 +1,6 @@
 package Tests.vytrack;
 
+import Tests.TestBase;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
@@ -18,7 +19,7 @@ import utils.BrowserUtils;
 
 import java.util.concurrent.TimeUnit;
 
-public class CalendarEventTests {
+public class CalendarEventTests extends TestBase {
     private WebDriver driver;
     private WebDriverWait wait;
 
@@ -62,13 +63,13 @@ public class CalendarEventTests {
     @Test(description = "verify page subtitle")
     public void test1() {
         WebElement subTitle=driver.findElement(By.className("oro-subtitle"));
-        String expectedSubtitle = "All Calendar Events";
+        String expectedSubtitle = "All Calendar Eventsv";
         String actualSubTitle = subTitle.getText();
         System.out.println(actualSubTitle);
         Assert.assertEquals(actualSubTitle, expectedSubtitle, "subtitle is wrong");
     }
 
-    @Test(description = "verify that ")
+    @Test(description = "verify that ",invocationCount = 2,threadPoolSize = 2,timeOut = 1000000)
     public void test2() {
         Assert.assertTrue(driver.findElement(By.cssSelector("[title='Create Calendar event']")).isDisplayed());
     }

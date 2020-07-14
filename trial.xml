@@ -1,0 +1,19 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name="trial" parallel="classes" thread-count="2">
+
+<!--    <test name="trial">-->
+<!--        <parameter name="username" value="storemanager86"></parameter>-->
+<!--        <parameter name="password" value="UserUser123"></parameter>-->
+<!--        <classes>-->
+
+<!--            <class name="Tests.vytrack.LoginTests"></class>-->
+
+<!--        </classes>-->
+<!--    </test>-->
+    <test name="trial">
+    <parameter name="browser" value="chrome"></parameter>
+        <classes>
+            <class name="Tests.vytrack.CreateCarTests"></class>
+        </classes>
+    </test>
+</suite>

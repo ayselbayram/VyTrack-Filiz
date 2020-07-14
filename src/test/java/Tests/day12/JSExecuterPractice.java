@@ -6,6 +6,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 import utils.BrowserFactory;
 import utils.BrowserUtils;
@@ -27,6 +28,7 @@ public class JSExecuterPractice {
             //move 500 pixels down
             js.executeScript("window.scrollBy(0,500);");
             BrowserUtils.wait(1);
+
         }
     }
 
@@ -52,6 +54,12 @@ public class JSExecuterPractice {
         driver.get("http://practice.cybertekschool.com/dynamic_loading");
         //example 1 is a beginning of the phrase <a href='http:'>Example1...</a>
         WebElement link1 = driver.findElement(By.partialLinkText("Example 1"));
+        if(link1 !=null){
+            System.out.println("element is present");
+        }
+        else{
+            System.out.println("element is not present");
+        }
         JavascriptExecutor js = (JavascriptExecutor) driver;
         //arguments[0]=link1 webelement
         //whenever regular selenium methods are not working, i use js executor
@@ -83,6 +91,30 @@ public class JSExecuterPractice {
 
 
     }
+
+    public void getJsScrolling(){
+        JavascriptExecutor js= (JavascriptExecutor) driver;
+        //scrcolling every 100 word
+        js.executeScript("windows.script(0,100);");
+
+        //scrolling untill see the text
+        WebElement text=driver.findElement(By.id("text"));
+        js.executeScript("argument[0].scrollIntiView(true)",text);
+
+        //clicking the link, I used it when I can not click with selenium or action class
+        WebElement link=driver.findElement(By.id("link"));
+        js.executeScript("argument[0].click()",link);
+
+
+
+
+    }
+
+
+
+
+
+
 
 
     @AfterMethod

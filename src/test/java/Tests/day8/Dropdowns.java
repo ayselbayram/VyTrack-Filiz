@@ -1,5 +1,6 @@
 package Tests.day8;
 
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -26,7 +27,7 @@ public class Dropdowns {
         driver = BrowserFactory.getDriver("chrome");
         driver.get("http://practice.cybertekschool.com/");
         driver.findElement(By.linkText("Dropdown")).click();
-
+        Alert sl=driver.switchTo().alert();
     }
 
     @Test(description = "Select option 2 from the dropdown")

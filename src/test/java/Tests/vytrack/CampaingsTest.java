@@ -8,7 +8,9 @@ import utils.BrowserUtils;
 
 public class CampaingsTest extends TestBase {
 
-    @Test(description = "verify that in the search button write'java is fun'")
+//    @Test(description = "verify that in the search button write'java is fun'")
+//    @Test(groups = {"test2","test1"})
+@Test
     public void test1(){
         LoginPage loginpage=new LoginPage();
         CampaignsPage campaignPage=new CampaignsPage();
@@ -20,7 +22,8 @@ public class CampaingsTest extends TestBase {
 
 
     }
-    @Test(description = "")
+//    @Test(enabled = false)
+    @Test(priority = 4)
     public void clickViewPerPage(){
         LoginPage loginpage=new LoginPage();
         loginpage.login("storemanager85","UserUser123");

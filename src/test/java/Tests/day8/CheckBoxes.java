@@ -43,6 +43,8 @@ public class CheckBoxes {
             }index++;
         }
 
+
+
     }
     @AfterMethod
     public void teardown(){

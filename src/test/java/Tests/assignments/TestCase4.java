@@ -65,7 +65,7 @@ public class TestCase4 {
         gridButton.click();
         BrowserUtils.wait(1);
         List<WebElement> checkboxes = driver.findElements(xpath("//table[@class='grid table-hover table table-condensed']//tr//td[3]"));
-        for (int i = 1; i < checkboxes.size(); i++) {
+        for (int i = 2; i < checkboxes.size(); i++) {
             checkboxes.get(i).click();
             BrowserUtils.wait(1);
         }

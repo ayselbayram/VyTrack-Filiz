@@ -21,7 +21,10 @@ public class DragAndDropPractice {
 
 
         Actions actions=new Actions(driver);
+
         WebElement moon=driver.findElement(By.id("draggable"));
+        actions.doubleClick(moon).perform();
+        actions.moveToElement(moon).doubleClick().build().perform();
         WebElement earth=driver.findElement(By.id("droptarget"));
         BrowserUtils.wait(3);
 

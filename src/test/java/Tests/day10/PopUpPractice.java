@@ -30,6 +30,8 @@ public class PopUpPractice {
         //means clcik ok
         alert.accept();
 
+
+
     }
     @Test(description = "click on button 2 and cancel in popup message, then get the message")
     public void test2(){
